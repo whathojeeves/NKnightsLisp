@@ -27,6 +27,7 @@
  (cond 
   ((> y col) (sreck2 row col start 1 noplace (+ start 1) pos sols))
   ((and (> x row) (> (length pos) (maxlengths sols ()))) (cons (reverse pos) sols))
+  ;((> x row) (cons (reverse pos) sols))
   ((> x row) sols)
 
   ((safe (list x y) pos noplace)
