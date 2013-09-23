@@ -26,12 +26,12 @@
 (defun sreck2(row col x y noplace start pos sols)
  (cond 
   ((> y col) (sreck2 row col start 1 noplace (+ start 1) pos sols))
-  ((and (> x row) (> (length pos) (maxlengths sols ()))) (cons (reverse pos) sols))
+  ((and (> x row) (>= (length pos) (maxlengths sols ()))) (cons (reverse pos) sols))
   ;((> x row) (cons (reverse pos) sols))
   ((> x row) sols)
 
   ((safe (list x y) pos noplace)
-   (sreck2 row col x (+ y 2) noplace start pos
+   (sreck2 row col x (+ y 1) noplace start pos
     (sreck2 row col x (+ y 1) noplace start 
      (cons (list x y) pos)
      sols)))
