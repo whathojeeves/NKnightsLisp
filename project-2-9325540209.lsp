@@ -1,9 +1,11 @@
 (defun attack(pos1 pos2)
-  (if (or  (and ( = (car pos1) (car pos2)) (= (cadr pos1) (cadr pos2)))
+  (cond
+  ((or  (and ( = (car pos1) (car pos2)) (= (cadr pos1) (cadr pos2)))
            (and ( = (abs (- (car pos1) (car pos2))) 1) ( = (abs( - (cadr pos1) (cadr pos2))) 2)) 
            (and ( = (abs (- (car pos1) (car pos2))) 2) ( = (abs( - (cadr pos1) (cadr pos2))) 1)) 
       ) t )
-      )
+  (t nil)))
+      
 
 (defun notallowed(pos noplace)
   (cond
@@ -23,19 +25,19 @@
     (t (safe pos (cdr knights) noplace)))
   )
 
-(defun sreck2(row col x y noplace start pos sols)
+(defun knights_recurse(row col x y noplace start pos sols)
  (cond 
-  ((> y col) (sreck2 row col start 1 noplace (+ start 1) pos sols))
+  ((> y col) (knights_recurse row col start 1 noplace (1+ start) pos sols))
   ((and (> x row) (>= (length pos) (maxlengths sols ()))) (cons (reverse pos) sols))
   ;((> x row) (cons (reverse pos) sols))
   ((> x row) sols)
 
   ((safe (list x y) pos noplace)
-   (sreck2 row col x (+ y 1) noplace start pos
-    (sreck2 row col x (+ y 1) noplace start 
+   (knights_recurse row col x (1+ y) noplace start pos
+    (knights_recurse row col x (1+ y) noplace start 
      (cons (list x y) pos)
      sols)))
-  (t (sreck2 row col x (+ y 1) noplace start pos sols))))
+  (t (knights_recurse row col x (1+ y) noplace start pos sols))))
 
 (defun maxlengths(lst maxlst)
  (cond
@@ -45,4 +47,4 @@
   (t (maxlengths (cdr lst) maxlst))))
 
 (defun place-knights (l)
- (first (sreck2 (car (car l)) (cadr (car l)) 1 1 (cadr l) 1 '() '())))
+ (first (knights_recurse (car (car l)) (cadr (car l)) 1 1 (cadr l) 1 '() '())))

@@ -3,6 +3,7 @@
            (and ( = (abs (- (car pos1) (car pos2))) 1) ( = (abs( - (cadr pos1) (cadr pos2))) 2)) 
            (and ( = (abs (- (car pos1) (car pos2))) 2) ( = (abs( - (cadr pos1) (cadr pos2))) 1)) 
       ) t )
+  (nil)
       )
 
 (defun notallowed(pos noplace)
